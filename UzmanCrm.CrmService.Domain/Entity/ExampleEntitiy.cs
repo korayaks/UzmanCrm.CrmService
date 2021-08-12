@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UzmanCrm.CrmService.Application.Service.Shared;
+using UzmanCrm.CrmService.Domain.Base;
 
-namespace UzmanCrm.CrmService.Application.Service.Model
+namespace UzmanCrm.CrmService.Domain.Entity
 {
-    public class ExampleEntityDto: BaseSchemaDto<Guid>
+    public class ExampleEntity : BaseSchema<Guid>
     {
         public string Name { get; set; }
     }

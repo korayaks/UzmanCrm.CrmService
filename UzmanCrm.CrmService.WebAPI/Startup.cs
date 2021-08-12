@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UzmanCrm.CrmService.Application.Service.ExampleService.Mappings;
 using UzmanCrm.CrmService.Application.Service.Utilities;
 using UzmanCrm.CrmService.Infrastructure.Extensions;
 
@@ -39,11 +40,11 @@ namespace UzmanCrm.CrmService.WebAPI
             });
             
             services.AddOptions();//addoptions
+            services.AddAutoMapper(typeof(ExampleProfile));
         }
 
         public void ConfigureContainer(ContainerBuilder builder)//function
         {
-            var asd = new Application.Service.Utilities.ExampleService();
             builder.RegisterModule(new DependencyRegister());
         }
 

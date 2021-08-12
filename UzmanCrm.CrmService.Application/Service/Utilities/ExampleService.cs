@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,11 @@ namespace UzmanCrm.CrmService.Application.Service.Utilities
 {
     public class ExampleService : IExampleService
     {
+        private readonly IMapper _mapper;
+        public ExampleService(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
         public async Task<ExampleEntityDto> ExampleMethodAsync()
         {
             var data = new ExampleEntityDto();
