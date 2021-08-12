@@ -37,12 +37,13 @@ namespace UzmanCrm.CrmService.WebAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UzmanCrm.CrmService.WebAPI", Version = "v1" });
             });
-
+            
             services.AddOptions();//addoptions
         }
 
         public void ConfigureContainer(ContainerBuilder builder)//function
         {
+            var asd = new Application.Service.Utilities.ExampleService();
             builder.RegisterModule(new DependencyRegister());
         }
 

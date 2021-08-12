@@ -11,5 +11,7 @@ namespace UzmanCrm.CrmService.Application.Service.Utilities
     public interface IExampleService : IApplicationService
     {
         Task<ExampleEntityDto> ExampleMethodAsync();
+
+        Task<List<ExampleEntityDto>> ExapmleMethodList();
     }
 }

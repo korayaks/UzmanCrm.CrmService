@@ -15,5 +15,24 @@ namespace UzmanCrm.CrmService.Application.Service.Utilities
             data.Name = "korayaks";
             return data;
         }
+       
+        public async Task<List<ExampleEntityDto>> ExapmleMethodList()
+        {
+            var list = new List<ExampleEntityDto>()
+            {
+                new ExampleEntityDto()
+                {
+                    Name = "koray"
+                },
+                new ExampleEntityDto()
+                {
+                    Name = "burak"
+                },new ExampleEntityDto()
+                {
+                    Name = "aksoy"
+                }
+            };
+            return list;
+        }
     }
 }
