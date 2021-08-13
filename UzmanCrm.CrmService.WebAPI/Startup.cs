@@ -1,4 +1,5 @@
 using Autofac;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,6 +12,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using UzmanCrm.CrmService.Application.Service.ExampleService.Mappings;
 using UzmanCrm.CrmService.Application.Service.Utilities;
@@ -30,20 +32,20 @@ namespace UzmanCrm.CrmService.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //var containerBuilder = new ContainerBuilder();
-            //ServiceCollectionExtensions.RegisterApplicationServices(containerBuilder);
-            //var container = containerBuilder.Build();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UzmanCrm.CrmService.WebAPI", Version = "v1" });
             });
-            
-            services.AddOptions();//addoptions
-            services.AddAutoMapper(typeof(ExampleProfile));
-        }
 
-        public void ConfigureContainer(ContainerBuilder builder)//function
+            services.AddOptions();//addoptions for autofac
+            Infrastructure.Extensions.ServiceCollectionExtensions.AutoMapperConfigure(services);//AutoMapper
+            
+        }
+        
+
+
+        public void ConfigureContainer(ContainerBuilder builder)//autofac function
         {
             builder.RegisterModule(new DependencyRegister());
         }

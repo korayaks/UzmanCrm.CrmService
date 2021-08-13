@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,22 +14,22 @@ namespace UzmanCrm.CrmService.Infrastructure.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static ContainerBuilder RegisterApplicationServices(ContainerBuilder builder)
+        public static IServiceCollection AutoMapperConfigure(IServiceCollection services)
         {
-            
-
-            var allAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToArray();
-
-            var assemblies = allAssemblies.Where(t => t.FullName.Contains("Application")).ToArray();
-
-            //builder.RegisterType<IApplicationService>();
-            builder.RegisterType<ExampleService>().As<IExampleService>();
-            builder.RegisterAssemblyTypes(assemblies)
-                .Where(t => t.Namespace.Contains("Utilities"))
-                .As(t => t.GetInterfaces().FirstOrDefault(i => i.Name == "I" + t.Name));
-
-
-            return builder;
+            List<Assembly> myAssemblyList = new List<Assembly>();
+            var allAssemblies = Assembly.GetEntryAssembly().GetReferencedAssemblies().ToArray();
+            var myAssemblies = allAssemblies.Where(t => t.FullName.Contains("Service")).ToArray();            
+            foreach (var assembly in myAssemblies)
+            {
+                myAssemblyList.Add(Assembly.Load(assembly));
+            }                       
+            services.AddSingleton(CreateMapper(myAssemblyList.ToArray()));
+            return services;
         }
+        private static IMapper CreateMapper(Assembly[] assembly)
+            => new MapperConfiguration(config => config.AddMaps(assembly))
+            .CreateMapper();
+
+
     }
 }

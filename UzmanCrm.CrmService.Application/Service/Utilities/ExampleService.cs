@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UzmanCrm.CrmService.Application.Service.Model;
+using UzmanCrm.CrmService.Domain.Entity;
 
 namespace UzmanCrm.CrmService.Application.Service.Utilities
 {
@@ -17,28 +18,41 @@ namespace UzmanCrm.CrmService.Application.Service.Utilities
         }
         public async Task<ExampleEntityDto> ExampleMethodAsync()
         {
-            var data = new ExampleEntityDto();
-            data.Name = "korayaks";
-            return data;
+            var data = new ExampleEntity()
+            {
+                Name = "Entity name",
+
+                Id = new Guid(),
+                CreatedBy = new Guid(),
+                ModifiedBy = new Guid(),
+                CreatedOn = DateTime.Now,
+                ModifiedOn = DateTime.Now,
+                IsActive = true,
+                IsDelete = false
+            };
+            
+            var userinfo = _mapper.Map<ExampleEntityDto>(data);
+            return userinfo;
         }
        
         public async Task<List<ExampleEntityDto>> ExapmleMethodList()
         {
-            var list = new List<ExampleEntityDto>()
+            var list = new List<ExampleEntity>()
             {
-                new ExampleEntityDto()
+                new ExampleEntity()
                 {
                     Name = "koray"
                 },
-                new ExampleEntityDto()
+                new ExampleEntity()
                 {
                     Name = "burak"
-                },new ExampleEntityDto()
+                },new ExampleEntity()
                 {
                     Name = "aksoy"
                 }
             };
-            return list;
+            var userlist = _mapper.Map<List<ExampleEntityDto>>(list);
+            return userlist;
         }
     }
 }
