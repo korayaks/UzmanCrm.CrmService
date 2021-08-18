@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UzmanCrm.CrmService.Domain.Base
 {
-    public class BaseSchema<T> //: IEntity<T>
+    public class BaseSchema<T> 
     {
         public T Id { get; set; }
 

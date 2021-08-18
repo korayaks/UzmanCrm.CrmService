@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Nest;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +41,8 @@ namespace UzmanCrm.CrmService.WebAPI
 
             services.AddOptions();//addoptions for autofac
             Infrastructure.Extensions.ServiceCollectionExtensions.AutoMapperConfigure(services);//AutoMapper
-            
+            var settings = new ConnectionSettings(new Uri("http://elasticsearch:9200"));
+            services.AddSingleton<IElasticClient>(new ElasticClient(settings));
         }
         
 
