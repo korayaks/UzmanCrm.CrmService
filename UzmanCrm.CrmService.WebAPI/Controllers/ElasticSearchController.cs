@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UzmanCrm.CrmService.Application.Service.Model;
+using UzmanCrm.CrmService.Application.Service.Utilities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,29 +14,24 @@ namespace UzmanCrm.CrmService.WebAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class ElasticSearchController : ControllerBase
-    {
-        private readonly IElasticClient _elasticClient;
-        public ElasticSearchController(IElasticClient elasticClient)
+    {    
+        private readonly IElasticSearchService _elasticSearchService;
+        public ElasticSearchController(IElasticClient elasticClient,IElasticSearchService elasticSearchService)
         {
-            _elasticClient = elasticClient;
+            _elasticSearchService=elasticSearchService;
         }
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
-        public async Task<ExampleEntityDto> Get(string id)
-        {
-            var response = await _elasticClient.SearchAsync<ExampleEntityDto>(s => s
-            .Index("users")
-            .Query(q => q.Match(m => m.Field(f => f.Name).Query(id))));
-
-            return response?.Documents?.FirstOrDefault();
+        public async Task<ExampleEntityDto> Get(string id, string index)
+        {          
+            return await _elasticSearchService.GetMethod(id, index);
         }
 
         // POST api/<UsersController>
         [HttpPost]
-        public async Task<string> Post([FromBody] ExampleEntityDto value)
+        public async Task<string> Post([FromBody] ExampleEntityDto value, string index)
         {
-            var response = await _elasticClient.IndexAsync<ExampleEntityDto>(value, x => x.Index("users"));
-            return response.Id;
+            return await _elasticSearchService.PostMethod(value, index);
         }
     }
 }

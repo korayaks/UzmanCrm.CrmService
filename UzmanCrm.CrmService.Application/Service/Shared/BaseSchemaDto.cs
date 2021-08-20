@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UzmanCrm.CrmService.Domain.Abstraction;
 
 namespace UzmanCrm.CrmService.Application.Service.Shared
 {
-    public class BaseSchemaDto<T>
+    public class BaseSchemaDto<T>:IEntity
     {
         public T Id { get; set; }
 

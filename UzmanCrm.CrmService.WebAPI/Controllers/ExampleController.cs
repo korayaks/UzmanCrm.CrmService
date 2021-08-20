@@ -17,7 +17,6 @@ namespace UzmanCrm.CrmService.WebAPI.Controllers
         {
             this.exampleService = exampleService; 
         }
-
         [HttpGet]
         public async Task<ExampleEntityDto> ExampleMethod()
         {
@@ -31,7 +30,5 @@ namespace UzmanCrm.CrmService.WebAPI.Controllers
             var res = await exampleService.ExapmleMethodList();
             return res;
         }
-
-
     }
 }
