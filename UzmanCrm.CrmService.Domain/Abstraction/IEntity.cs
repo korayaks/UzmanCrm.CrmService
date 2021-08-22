@@ -8,5 +8,6 @@ namespace UzmanCrm.CrmService.Domain.Abstraction
 {
     public interface IEntity
     {
+        public string Name { get; set; }
     }
 }

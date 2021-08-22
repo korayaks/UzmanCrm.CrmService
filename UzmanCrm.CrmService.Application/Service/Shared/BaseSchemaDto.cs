@@ -7,7 +7,7 @@ using UzmanCrm.CrmService.Domain.Abstraction;
 
 namespace UzmanCrm.CrmService.Application.Service.Shared
 {
-    public class BaseSchemaDto<T>:IEntity
+    public class BaseSchemaDto<T>
     {
         public T Id { get; set; }
 

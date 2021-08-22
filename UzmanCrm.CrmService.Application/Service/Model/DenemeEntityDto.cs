@@ -8,8 +8,10 @@ using UzmanCrm.CrmService.Domain.Abstraction;
 
 namespace UzmanCrm.CrmService.Application.Service.Model
 {
-    public class ExampleEntityDto: BaseSchemaDto<Guid> , IEntity
+    public class DenemeEntityDto : BaseSchemaDto<Guid>, IEntity
     {
         public string Name { get; set; }
+        public string adres { get; set; }
+        public string yas { get; set; }
     }
 }

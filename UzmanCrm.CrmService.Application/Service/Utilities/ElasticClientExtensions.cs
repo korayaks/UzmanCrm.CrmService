@@ -13,8 +13,6 @@ namespace UzmanCrm.CrmService.Application.Service.Utilities
 		public static Task<ISearchResponse<T>> SearchWithMatch<T>(this IElasticClient client, Expression<Func<T, object>> field, string index,string id)
 			where T : class =>
 			client.SearchAsync<T>(s => s
-				.From(0)
-				.Size(10)
 				.Index(index)
 				.Query(q => q
 					.Match(m => m

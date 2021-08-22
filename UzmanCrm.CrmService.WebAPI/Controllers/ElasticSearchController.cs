@@ -24,14 +24,14 @@ namespace UzmanCrm.CrmService.WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ExampleEntityDto> Get(string id, string index)
         {          
-            return await _elasticSearchService.GetMethod(id, index);
+            return await _elasticSearchService.GetMethod<ExampleEntityDto>(id, index);
         }
 
         // POST api/<UsersController>
         [HttpPost]
         public async Task<string> Post([FromBody] ExampleEntityDto value, string index)
         {
-            return await _elasticSearchService.PostMethod(value, index);
+            return await _elasticSearchService.PostMethod<ExampleEntityDto>(value, index);
         }
     }
 }
