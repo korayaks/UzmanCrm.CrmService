@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Elasticsearch.Net;
+using Microsoft.AspNetCore.Mvc;
 using Nest;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using UzmanCrm.CrmService.Application.Service.Model;
 using UzmanCrm.CrmService.Domain.Abstraction;
@@ -17,16 +20,23 @@ namespace UzmanCrm.CrmService.Application.Service.Utilities
         {
             _elasticClient = elasticClient;
         }
-        public async Task<string> PostMethod<T>([FromBody] T value, string index) where T : class
+        public async Task<string> PostMethod([FromBody] JsonElement value, string index)
         {
-            var response = await _elasticClient.IndexAsync<T>(value, x => x.Index(index));
-            return response.Id;
+           return await ElasticClientExtensions.PostJsonAsync(_elasticClient, index, value);
         }
 
-        public async Task<T> GetMethod<T>(string id, string index) where T : class, IEntity
+        public async Task<string> GetMethod(string key,string value, string index)
         {
-            var response = await _elasticClient.SearchWithMatch<T>(f => f.Name, index, id);
-            return response?.Documents?.FirstOrDefault();
+
+            return await ElasticClientExtensions.GetJsonAsync(_elasticClient, index, key,value);
+        }
+        public async Task<List<string>> GetListMethod(string key,string value,string index)
+        {
+            return await ElasticClientExtensions.GetJsonListAsync(_elasticClient, index, key, value);
+        }
+        public async Task<string> PutMethod([FromBody] JsonElement value, string index, string id)
+        {
+            return await ElasticClientExtensions.PutJsonAsync(_elasticClient, index, id, value);
         }
     }
 }
