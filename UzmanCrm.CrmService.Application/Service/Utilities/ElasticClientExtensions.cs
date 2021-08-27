@@ -48,8 +48,8 @@ namespace UzmanCrm.CrmService.Application.Service.Utilities
         }
         public static async Task<string> GetJsonAsync(IElasticClient _elasticClient, string index, string key,string value)
         {
-            var serialized = ListOfJson(_elasticClient, index, key, value);                 
-            return serialized[0];
+            var serialized = ListOfJson(_elasticClient, index, key, value);              
+            return serialized.Count is 0 ? "Key and value pair do not match, or wrong index name." : serialized[0];           
         }
         public static async Task<List<string>> GetJsonListAsync(IElasticClient _elasticClient, string index, string key, string value)
         {
@@ -67,7 +67,7 @@ namespace UzmanCrm.CrmService.Application.Service.Utilities
             {
                 foreach (var sources in item.Source)
                 {
-                    if (sources.Key.ToString() == key || sources.Value.ToString() == value)
+                    if (sources.Key.ToString() == key && sources.Value.ToString() == value)
                     {
                         foreach (var all in item.Source)
                         {

@@ -24,10 +24,8 @@ namespace UzmanCrm.CrmService.Application.Service.Utilities
         {
            return await ElasticClientExtensions.PostJsonAsync(_elasticClient, index, value);
         }
-
         public async Task<string> GetMethod(string key,string value, string index)
         {
-
             return await ElasticClientExtensions.GetJsonAsync(_elasticClient, index, key,value);
         }
         public async Task<List<string>> GetListMethod(string key,string value,string index)
