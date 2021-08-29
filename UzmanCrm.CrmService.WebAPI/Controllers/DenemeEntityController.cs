@@ -30,7 +30,7 @@ namespace UzmanCrm.CrmService.WebAPI.Controllers
         public async Task<string> Get(string key, string value, string index)
         {
             var lastMessage = await _elasticSearchService.GetMethod(key, value, index);
-            _rabbitmqService.Send(lastMessage);
+            _rabbitmqService.SendInstagram(lastMessage);
             return lastMessage;
         }
         [HttpGet("{key}/GetListMethod")]      
@@ -39,7 +39,7 @@ namespace UzmanCrm.CrmService.WebAPI.Controllers
             var lastMessage = await _elasticSearchService.GetListMethod(key, value, index);
             foreach (var message in lastMessage)
             {
-                _rabbitmqService.Send(message);
+                _rabbitmqService.SendTwitter(message);
             }         
             return lastMessage;
         }
@@ -48,14 +48,14 @@ namespace UzmanCrm.CrmService.WebAPI.Controllers
         public async Task<string> Post([FromBody] JsonElement value, string index)
         {
             var lastMessage = await _elasticSearchService.PostMethod(value, index);
-            _rabbitmqService.Send(lastMessage);
+            _rabbitmqService.SendInstagram(lastMessage);
             return lastMessage;
         }
         [HttpPut]
         public async Task<string> Put([FromBody] JsonElement value, string index, string id)
         {
             var lastMessage = await _elasticSearchService.PutMethod(value, index, id);
-            _rabbitmqService.Send(lastMessage);
+            _rabbitmqService.SendTwitter(lastMessage);
             return lastMessage;
         }
     }

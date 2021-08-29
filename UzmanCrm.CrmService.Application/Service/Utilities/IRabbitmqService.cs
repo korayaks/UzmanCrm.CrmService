@@ -9,6 +9,7 @@ namespace UzmanCrm.CrmService.Application.Service.Utilities
 {
     public interface IRabbitmqService : IApplicationService
     {
-        void Send(string lastMessage);
+        void SendTwitter(string lastMessage);
+        void SendInstagram(string lastMessage);
     }
 }

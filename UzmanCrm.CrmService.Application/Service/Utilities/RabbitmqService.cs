@@ -10,16 +10,16 @@ namespace UzmanCrm.CrmService.Application.Service.Utilities
 {
     public class RabbitmqService : IRabbitmqService
     {
-        public void Send(string lastMessage)
+        private static ConnectionFactory connFactory = new ConnectionFactory { HostName = "localhost", Port = 5672 };
+        private static IConnection connection = connFactory.CreateConnection();
+        private static IModel _channel = connection.CreateModel();
+        public void SendTwitter(string lastMessage)
+        {            
+            TopicExchangePublisher.PublishTwitter(_channel, lastMessage);
+        }
+        public void SendInstagram(string lastMessage)
         {
-            var connFactory = new ConnectionFactory { HostName = "localhost", Port = 5672 };
-            using (var connection = connFactory.CreateConnection())
-            {
-                using (var channel = connection.CreateModel())
-                {
-                    QueueProducer.Publish(channel, lastMessage);
-                }
-            }
+            TopicExchangePublisher.PublishInstagram(_channel, lastMessage);
         }
     }
 }
