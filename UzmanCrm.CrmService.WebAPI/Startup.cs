@@ -40,19 +40,15 @@ namespace UzmanCrm.CrmService.WebAPI
             });
 
             services.AddOptions();//addoptions for autofac
-            Infrastructure.Extensions.ServiceCollectionExtensions.AutoMapperConfigure(services);//AutoMapper
-            var settings = new ConnectionSettings(new Uri("http://localhost:9200"));
-            services.AddSingleton<IElasticClient>(new ElasticClient(settings));
+            Infrastructure.Extensions.ServiceCollectionExtensions.AutoMapperConfigure(services);//Configure AutoMapper
+            var settings = new ConnectionSettings(new Uri("http://localhost:9200"));//Create new ConnectionSettings for Elasticsearch
+            services.AddSingleton<IElasticClient>(new ElasticClient(settings));//Add Elasticsearch with created settings.
         }
-        
 
-
-        public void ConfigureContainer(ContainerBuilder builder)//autofac function
+        public void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.RegisterModule(new DependencyRegister());
+            builder.RegisterModule(new DependencyRegister());//autofac configuration function.
         }
-
-
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -63,9 +59,6 @@ namespace UzmanCrm.CrmService.WebAPI
             }
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "UzmanCrm.CrmService.WebAPI v1"));
-
-            
-
             app.UseHttpsRedirection();
 
             app.UseRouting();

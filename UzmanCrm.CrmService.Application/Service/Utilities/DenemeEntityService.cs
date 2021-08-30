@@ -20,21 +20,21 @@ namespace UzmanCrm.CrmService.Application.Service.Utilities
         {
             _elasticClient = elasticClient;
         }
-        public async Task<string> PostMethod([FromBody] JsonElement value, string index)
-        {
-           return await ElasticClientExtensions.PostJsonAsync(_elasticClient, index, value);
-        }
         public async Task<string> GetMethod(string key,string value, string index)
         {
             return await ElasticClientExtensions.GetJsonAsync(_elasticClient, index, key,value);
-        }
+        }//return single data from elasticsearch. 
         public async Task<List<string>> GetListMethod(string key,string value,string index)
         {
             return await ElasticClientExtensions.GetJsonListAsync(_elasticClient, index, key, value);
-        }
+        }//return data list from elasticsearch.
+        public async Task<string> PostMethod([FromBody] JsonElement value, string index)
+        {
+            return await ElasticClientExtensions.PostJsonAsync(_elasticClient, index, value);
+        }//return single data from elasticsearch, that data will be given id.
         public async Task<string> PutMethod([FromBody] JsonElement value, string index, string id)
         {
             return await ElasticClientExtensions.PutJsonAsync(_elasticClient, index, id, value);
-        }
+        }//return single data from elasticsearch, that data will be given id and information about put process.
     }
 }

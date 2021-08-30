@@ -25,37 +25,40 @@ namespace UzmanCrm.CrmService.WebAPI.Controllers
             _elasticSearchService = elasticSearchService;
             _rabbitmqService = rabbitmqService;
         }
-        // GET api/<UsersController>/5
+        //Get single data from elasticsearch with key, value and index parameters
         [HttpGet("{key}/GetMethod")]
         public async Task<string> Get(string key, string value, string index)
         {
-            var lastMessage = await _elasticSearchService.GetMethod(key, value, index);
-            _rabbitmqService.SendInstagram(lastMessage);
+            var lastMessage = await _elasticSearchService.GetMethod(key, value, index);//Put relevant data on lastMessage field  
+            _rabbitmqService.SendInstagram(lastMessage);//Send lastMessage via Rabbitmq to Instagram Service
             return lastMessage;
         }
+        //Get data list from elasticsearch with key, value and index parameters
         [HttpGet("{key}/GetListMethod")]      
         public async Task<List<string>> GetList(string key, string value, string index)
         {
-            var lastMessage = await _elasticSearchService.GetListMethod(key, value, index);
+            var lastMessage = await _elasticSearchService.GetListMethod(key, value, index);//Put relevant datas on lastMessage field
             foreach (var message in lastMessage)
             {
-                _rabbitmqService.SendTwitter(message);
+                _rabbitmqService.SendTwitter(message);//Send all messages via Rabbitmq to Twitter Service
             }         
             return lastMessage;
         }
-        // POST api/<UsersController>
+        // Post json data to elasticsearch. Elasticsearch will save json data to given index parameter.
         [HttpPost]
         public async Task<string> Post([FromBody] JsonElement value, string index)
         {
-            var lastMessage = await _elasticSearchService.PostMethod(value, index);
-            _rabbitmqService.SendInstagram(lastMessage);
+            var lastMessage = await _elasticSearchService.PostMethod(value, index);//Put relevant data on lastMessage field
+            _rabbitmqService.SendInstagram(lastMessage);//Send lastMessage via Rabbitmq to Instagram Service
             return lastMessage;
         }
+        //Control the given id on elasticsearch. If elasticsearch have data with that given id in that given index,
+        //change the json data to given json data
         [HttpPut]
         public async Task<string> Put([FromBody] JsonElement value, string index, string id)
         {
-            var lastMessage = await _elasticSearchService.PutMethod(value, index, id);
-            _rabbitmqService.SendTwitter(lastMessage);
+            var lastMessage = await _elasticSearchService.PutMethod(value, index, id);//Put relevant data on lastMessage field
+            _rabbitmqService.SendTwitter(lastMessage);//Send lastMessage via Rabbitmq to Twitter Service
             return lastMessage;
         }
     }
