@@ -20,8 +20,7 @@
 
 ### Çalıştırmak için yapılması gerekenler.
 - İlk olarak Docker'ın yüklü olması şart çünkü ElasticSearch ve Rabbitmq container'lerini çalıştırmamız lazım. Servisimiz üzerinde bir işlem yapılacak ise bu container'ların docker üzerinde çalışır halde bulunması gerekmektedir, aksi taktirde hata ile karşılaşacaksınız.
-- Bir cmd açıp ```docker run -p 9200:9200 -p 9300:9300 --name elasticsearch -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.14.0``` komutunu çalıştırdığınızda eğer ilgili image yok ise ilgili image'ı indirecektir, indirme işlemi bittiğinde çalışır halde bir ElasticSearch conrainer'ı oluşturulacaktır.
-- Sonrasında Rabbitmq container'ı için yine cmd üzerinde ```docker run -d --hostname my-rabbit --name eccomm-rabbit -p 15672:15672 -p 5672:5672 rabbitmq:3-management``` komutunu çalıştırdığınızda eğer yine ilgili image yok ise indirip, çalışır halde bir Rabbitmq container'ı oluşturacaktır.
+- docker-compose.yml dosyasının bulunduğu klasör yoluna sahip bir cmd açın ve "docker compose up" komutunu çalıştırın. Bu komut elasticsearch ve rabbitmq'ya ait ilgili imageları indirip çalışır halde bir container oluşturacaktır ve iki container için de ilgili volume'lar yok ise oluşturacak var ise ilgili volume'u kullanacaktır.
 - localhost:15672 adresine girdiğinizde Rabbitmq paneline girmek için sizden Username ve Password isteyecektir, ikisi içinde "guest" değerini girerek panele admin olarak giriş yapabilirsiniz.
 - İlk hangi servisi çalıştıracağımız farketmeksizin UzmanCrm.CrmService servisimizi ve diğer Consumer servislerini çalıştırın.
 - Artık Swagger UI üzerinden Get, GetList, Post, Put işlemlerini yapıp, Consumer servisleri üzerinden gelen mesajları görebilirsiniz.
